@@ -12,7 +12,7 @@ It is critical to understand the relevance of the Soccer Power Index (SPI). In t
 - Pandas 2.1.1
 - Matplotlib 3.8.0
 - Seaborn 0.13.0
-- Numoy 1.26.0
+- Numpy 1.26.0
 
 ### References:
 
