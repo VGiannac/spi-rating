@@ -20,6 +20,7 @@ class SoccerAnalysis:
             data_url (str): The file path or URL for the data that has to be loaded.
         """
         self.data = pd.read_csv(data_url)
+        self.model = None  # Initialize the model attribute
 
     def display_data_head(self):
         """
@@ -104,6 +105,9 @@ class SoccerAnalysis:
         predictions = regression_model.predict(X_test)
         mse = mean_squared_error(y_test, predictions)
         print(f"Mean Squared Error: {mse}")
+
+        # Set the trained model to the class attribute
+        self.model = regression_model
 
         return regression_model
 
