@@ -14,7 +14,11 @@ class ModelingAnalysis:
         self.df.reset_index(drop=True, inplace=True)
 
     def prepare_data(self):
-        self.features = ['league_id', 'league', 'team1', 'team2', 'spi2', 'prob1', 'prob2']
+        # One-hot encode categorical variables
+        self.df = pd.get_dummies(self.df, columns=['league'])
+    
+        # Define features and target
+        self.features = ['league_id', 'team1', 'team2', 'spi2', 'prob1', 'prob2']
         X = self.df[self.features]
         y = self.df[self.target]
         return X, y
