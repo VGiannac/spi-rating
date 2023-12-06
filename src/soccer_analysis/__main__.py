@@ -10,7 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from warnings import filterwarnings
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 import seaborn as sns
 filterwarnings("ignore")
