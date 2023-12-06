@@ -1,9 +1,10 @@
 # __main__.py file
 
-from .summary import DataSummary
-from .eda import SoccerAnalysis
-from .inference import InferenceAnalysis
-from .modeling import ModelingAnalysis
+from .soccer_analysis.summary import DataSummary
+from .soccer_analysis.eda import SoccerAnalysis
+from .soccer_analysis.inference import InferenceAnalysis
+from .soccer_analysis.modeling import ModelingAnalysis
+
 
 import pandas as pd
 import numpy as np
@@ -22,7 +23,7 @@ def main():
     data_url = 'https://raw.githubusercontent.com/VGiannac/soccer_analysis/main/spi_global_rankings.csv'
 
     # Create instances of your analysis classes
-    matches_summary = DataSummary(data_urll)
+    matches_summary = DataSummary(data_url)
     global_rankings_summary = DataSummary(data_url)
     soccer_analysis_instance = SoccerAnalysis(data_url)
     soccer_inference_instance = InferenceAnalysis(data_url)
