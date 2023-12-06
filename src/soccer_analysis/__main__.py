@@ -22,8 +22,8 @@ def main():
     data_url = 'https://raw.githubusercontent.com/VGiannac/soccer_analysis/main/spi_global_rankings.csv'
 
     # Create instances of your analysis classes
-    matches_summary = DataSummary(matches_latest_data_url)
-    global_rankings_summary = DataSummary(global_rankings_data_url)
+    matches_summary = DataSummary(data_urll)
+    global_rankings_summary = DataSummary(data_url)
     soccer_analysis_instance = SoccerAnalysis(data_url)
     soccer_inference_instance = InferenceAnalysis(data_url)
     modeling_analysis = ModelingAnalysis(data_url) 
