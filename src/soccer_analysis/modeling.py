@@ -4,28 +4,18 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 class ModelingAnalysis:
+    def __init__(self, data_url):
+        self.data = pd.read_csv(data_url)
+        self.df = pd.read_csv(data_url)
+        self.target = 'spi1'
 
-    def __init__(self, csvfile):
-        self.csvfile = csvfile
-        self.df = pd.read_csv(csvfile)
-        self.features = ['league', 'home_team', 'away_team']
-        self.target = 'winning_percentage'
-
-    def clean_data(self):
-        # assuming 'winning_percentage' is a calculated field in the dataframe
-        # we need to add the field 'winning_percentage' to the dataframe
-        self.df['winning_percentage'] = self.df.apply(lambda row: self.calculate_winning_percentage(row), axis=1)
-        self.df.dropna(inplace=True)
-
-    def calculate_winning_percentage(self, row):
-        # helper function to calculate the winning percentage
-        total_games = row['total_games']
-        total_wins = row['total_wins']
-        return total_wins / total_games if total_games != 0 else 0
+    def filter_chinese_league_2019(self):
+        self.df = self.df[(self.df['league'] == 'Chinese Super League') & (self.df['season'] == 2019)]
+        self.df.reset_index(drop=True, inplace=True)
 
     def prepare_data(self):
-        self.df = pd.get_dummies(self.df, columns=self.features)
-        X = self.df.drop(self.target, axis=1)
+        self.features = ['league_id', 'league', 'team1', 'team2', 'spi2', 'prob1', 'prob2']
+        X = self.df[self.features]
         y = self.df[self.target]
         return X, y
 
@@ -44,4 +34,5 @@ class ModelingAnalysis:
 
     def make_predictions(self, X_new):
         return self.model.predict(X_new)
+
 
