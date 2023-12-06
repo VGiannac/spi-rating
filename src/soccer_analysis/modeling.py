@@ -1,5 +1,3 @@
-## soccer_analysis/modeling.py
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -23,14 +21,14 @@ from sklearn.metrics import accuracy_score, classification_report
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train)
         X_test_scaled = scaler.transform(X_test)
-
+    
         return X_train_scaled, X_test_scaled, y_train, y_test
-
+    
     def train_classifier(X_train, y_train):
         clf = RandomForestClassifier(random_state=42)
         clf.fit(X_train, y_train)
         return clf
-
+    
     def evaluate_classifier(clf, X_test, y_test):
         y_pred = clf.predict(X_test)
     
@@ -38,4 +36,5 @@ from sklearn.metrics import accuracy_score, classification_report
         print(f'Accuracy: {accuracy:.2f}')
     
         print(classification_report(y_test, y_pred))
+
 
