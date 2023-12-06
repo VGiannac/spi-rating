@@ -1,41 +1,47 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 class ModelingAnalysis:
-    def __init__(self, data_url):
-        self.data_url = data_url
-        self.df = pd.read_csv(data_url)
-        self.features = ['spi1', 'spi2', 'proj_score1', 'proj_score2']
-        self.target = 'outcome'
-        self.X_train, self.X_test, self.y_train, self.y_test = self.preprocess_data()
 
-    def preprocess_data(self):
-        # Assuming you have a column 'outcome' with values 'win', 'draw', 'loss'
-        self.df['outcome'] = self.df['outcome'].map({'win': 1, 'draw': 0, 'loss': -1})
+    def __init__(self, csvfile):
+        self.csvfile = csvfile
+        self.df = pd.read_csv(csvfile)
+        self.features = ['league', 'home_team', 'away_team']
+        self.target = 'winning_percentage'
 
-        X = self.df[self.features]
+    def clean_data(self):
+        # assuming 'winning_percentage' is a calculated field in the dataframe
+        # we need to add the field 'winning_percentage' to the dataframe
+        self.df['winning_percentage'] = self.df.apply(lambda row: self.calculate_winning_percentage(row), axis=1)
+        self.df.dropna(inplace=True)
+
+    def calculate_winning_percentage(self, row):
+        # helper function to calculate the winning percentage
+        total_games = row['total_games']
+        total_wins = row['total_wins']
+        return total_wins / total_games if total_games != 0 else 0
+
+    def prepare_data(self):
+        self.df = pd.get_dummies(self.df, columns=self.features)
+        X = self.df.drop(self.target, axis=1)
         y = self.df[self.target]
+        return X, y
 
+    def split_data(self, X, y):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        return X_train, X_test, y_train, y_test
 
-        scaler = StandardScaler()
-        X_train_scaled = scaler.fit_transform(X_train)
-        X_test_scaled = scaler.transform(X_test)
+    def train_model(self, X_train, y_train):
+        self.model = LinearRegression()
+        self.model.fit(X_train, y_train)
 
-        return X_train_scaled, X_test_scaled, y_train, y_test
+    def evaluate_model(self, X_test, y_test):
+        y_pred = self.model.predict(X_test)
+        mse = mean_squared_error(y_test, y_pred)
+        print(f"Mean Squared Error: {mse}")
 
-    def train_classifier(self):
-        clf = RandomForestClassifier(random_state=42)
-        clf.fit(self.X_train, self.y_train)
-        return clf
+    def make_predictions(self, X_new):
+        return self.model.predict(X_new)
 
-    def evaluate_classifier(self, clf):
-        y_pred = clf.predict(self.X_test)
-
-        accuracy = accuracy_score(self.y_test, y_pred)
-        print(f'Accuracy: {accuracy:.2f}')
-
-        print(classification_report(self.y_test, y_pred))
