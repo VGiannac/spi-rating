@@ -68,13 +68,16 @@ class ModelingAnalysis:
         print(f'R^2 Score: {r2}')
         return mse, r2
 
-    def plot_rank_importance(self):
-        feature_indices = [self.X_train.columns.get_loc('rank'), self.X_train.columns.get_loc('prev_rank')]
-        importances = self.model.feature_importances_[feature_indices]
-        feature_names = ['rank', 'prev_rank']
+    def plot_predictions(self):
+        """
+        Plots a scatter plot of predicted values against actual values on the test set.
+        """
+        predictions = self.pipeline.predict(self.X_test)
 
-        plt.bar(feature_names, importances)
-        plt.title('Rank and Previous Rank Importance')
+        plt.scatter(self.y_test, predictions)
+        plt.xlabel('Actual Values')
+        plt.ylabel('Predicted Values')
+        plt.title('Actual vs Predicted Values')
         plt.show()
 
     
