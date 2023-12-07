@@ -52,9 +52,17 @@ class ModelingAnalysis:
         self.model = self.pipeline.named_steps['regressor']
 
     def evaluate_model(self):
-        predictions = self.pipeline.predict(self.X_test)
-        mse = mean_squared_error(self.y_test, predictions)
-        r2 = r2_score(self.y_test, predictions)
-        print(f'Mean Squared Error: {mse}')
-        print(f'R^2 Score: {r2}')
-        return mse, r256
+    """
+    Evaluates the model's performance on the test set using mean squared error and R squared metrics.
+
+    Returns
+    -------
+    tuple
+        A tuple containing mean squared error and R squared score of the model's predictions.
+    """
+    predictions = self.pipeline.predict(self.X_test)
+    mse = mean_squared_error(self.y_test, predictions)
+    r2 = r2_score(self.y_test, predictions)
+    print(f'Mean Squared Error: {mse}')
+    print(f'R^2 Score: {r2}')
+    return mse, r2 
