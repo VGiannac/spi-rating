@@ -12,6 +12,9 @@ from warnings import filterwarnings
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
 from sklearn.metrics import accuracy_score, classification_report
 import seaborn as sns
 filterwarnings("ignore")
