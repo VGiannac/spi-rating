@@ -68,12 +68,13 @@ class ModelingAnalysis:
         print(f'R^2 Score: {r2}')
         return mse, r2
 
-    def plot_feature_importance(model, features):
-        importances = model.feature_importances_
-        indices = range(len(features))
-        plt.bar(indices, importances)
-        plt.xticks(indices, features, rotation='vertical')
-        plt.title('Feature Importance')
+    def plot_rank_importance(self):
+        feature_indices = [self.X_train.columns.get_loc('rank'), self.X_train.columns.get_loc('prev_rank')]
+        importances = self.model.feature_importances_[feature_indices]
+        feature_names = ['rank', 'prev_rank']
+
+        plt.bar(feature_names, importances)
+        plt.title('Rank and Previous Rank Importance')
         plt.show()
 
     
