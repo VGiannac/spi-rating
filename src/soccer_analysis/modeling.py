@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
 
 
 class ModelingAnalysis:
@@ -66,3 +67,13 @@ class ModelingAnalysis:
         print(f'Mean Squared Error: {mse}')
         print(f'R^2 Score: {r2}')
         return mse, r2
+
+    def plot_feature_importance(model, features):
+        importances = model.feature_importances_
+        indices = range(len(features))
+        plt.bar(indices, importances)
+        plt.xticks(indices, features, rotation='vertical')
+        plt.title('Feature Importance')
+        plt.show()
+
+    
